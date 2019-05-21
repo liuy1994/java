@@ -30,9 +30,9 @@ public class MaxElement {
     }
 }
 class Node{
-    int num;
+    private int num;
     int max;
-    public Node(int num, int max){
+    Node(int num, int max){
         this.num = num;
         this.max = max;
     }
