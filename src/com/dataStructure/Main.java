@@ -1,7 +1,12 @@
 package com.dataStructure;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        System.out.println(Arrays.toString(Solution.twoSum(new int[]{2, 7, 11, 15}, 9)));
 //        System.out.println(Arrays.toString(Solution.twoSum(new int[]{15, 2, 7, 11}, 17)));
 //        System.out.println(Arrays.toString(Solution.twoSum(new int[]{2, 7, 11, 15}, 26)));
@@ -13,11 +18,14 @@ public class Main {
 //        System.out.println(Solution.isValidParentheses("([]{[]})"));
 //        System.out.println(Solution.isValidParentheses("{}([][(})"));
 //        System.out.println(Solution.isValidParentheses("{}{{)(({}]["));
-        System.out.println(Solution.count("bngfsdoaiubnadskglfijb"));
-        System.out.println(Solution.count("fdswe"));
-        System.out.println(Solution.count("bkhjfsdakvhbjgabgsd"));
-        System.out.println(Solution.count("wer"));
-        System.out.println(Solution.count("aaaaaassss"));
+//        System.out.println(Solution.count("bngfsdoaiubnadskglfijb"));
+//        System.out.println(Solution.count("fdswe"));
+//        System.out.println(Solution.count("bkhjfsdakvhbjgabgsd"));
+//        System.out.println(Solution.count("wer"));
+//        System.out.println(Solution.count("aaaaaassss"));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("other/output.txt"));
+        bufferedWriter.write("21346584562345234");
+        bufferedWriter.close();
     }
 }
 
