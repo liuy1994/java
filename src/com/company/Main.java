@@ -2,26 +2,22 @@ package com.company;
 
 import com.company.Human;
 
+import java.io.*;
+
 public class Main {
 
-    public static void main(String[] args) {
-	// write your code here
-        System.out.println("Hello");
+    public static void main(String[] args) throws IOException {
 
-        Human human = new Human();
-        
-        System.out.println(human.name);
-        System.out.println(human.weight);
-        
-        Human leon = new Human("leon", 200);
-        System.out.println(leon.name);
-        System.out.println(leon.weight);
+        PrintStream output = System.out;
+        output.println("hello word");
 
-        leon.rename("david");
-        Human david = leon;
-        int newWeight = david.workout();
+        InputStream input = System.in;
 
-        System.out.println(newWeight);
+        InputStreamReader reader =  new InputStreamReader(input);
 
+        char[] buffer = new char[20];
+        int length = reader.read(buffer);
+
+        output.println(length);
     }
 }
