@@ -51,6 +51,6 @@ public class Main {
         printer.print(context);
         printer.close();
         output.close();
-
+        System.out.println(context);
     }
 }
