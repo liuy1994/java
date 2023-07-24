@@ -1,21 +1,14 @@
 package com.company;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 
 public class Main {
-    public static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args)  {
-        System.out.println("开始");
-        int n = scanner.nextInt();
-        if (n < 2 || n > 20) {
-            System.out.println("输入的数字应该是2 与 20之间的正整数");
-        } else {
-            for (int i=1;i<=10;i++) {
-                System.out.println(n + " X " + i + " = " + n * i);
-            }
-        }
-        System.out.println("结束");
-        scanner.close();
+    public static void main(String[] args) throws IOException {
+        InputStreamReader reader = new InputStreamReader(System.in);
+        char[] buffer = new char[20];
+        int length = reader.read(buffer);
+        System.out.println(length);
     }
 }
 
