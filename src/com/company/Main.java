@@ -4,17 +4,33 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Stack stack = new Stack();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
+      System.out.println(isValid("[][][]"));
+    }
 
+    public static Boolean isValid(String str) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put(")", "(");
+        map.put("]", "[");
+        map.put("}", "{");
 
-        System.out.println(stack.peek());
-        System.out.println(stack);
-        System.out.println(stack.pop());
-        System.out.println(stack);
+        Stack<String> stack = new Stack<String>();
+
+        for (String s : str.split("")) {
+            if (map.containsKey(s)) {
+                if (!stack.empty() && map.get(s).equals(stack.peek())) {
+                    stack.pop();
+                } else {
+                    stack.push(s);
+                }
+            } else {
+                stack.push(s);
+            }
+        }
+
+        return stack.empty();
     }
 }
+
+
 
 
