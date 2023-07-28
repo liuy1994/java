@@ -1,10 +1,10 @@
-package com.company;
+package com.company.news;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.*;
 
 public class News {
-    private String title;
+    private  String title;
     private String content;
     public News() {}
     public News(String title, String content) {

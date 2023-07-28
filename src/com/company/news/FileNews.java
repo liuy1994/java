@@ -1,4 +1,6 @@
-package com.company;
+package com.company.news;
+
+import com.company.news.News;
 
 import java.io.*;
 

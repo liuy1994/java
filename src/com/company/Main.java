@@ -1,4 +1,6 @@
 package com.company;
+import com.company.news.*;
+
 import java.io.*;
 
 public class Main {
