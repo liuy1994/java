@@ -6,6 +6,11 @@ import java.nio.charset.*;
 public class News {
     private String title;
     private String content;
+    public News() {}
+    public News(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
     public void read(String fileUrl) throws IOException {
         FileInputStream input = new FileInputStream(fileUrl);
@@ -42,4 +47,11 @@ public class News {
         return "title: " + title + "\ncontent: " + content;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
