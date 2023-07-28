@@ -1,5 +1,4 @@
 package com.company;
-import com.company.animal.*;
 
 import java.io.*;
 
@@ -13,11 +12,15 @@ public class Main {
 ////        news.write("res/output2.txt");
 //        FileNews fileNews = new FileNews("fileTitle", "fileContent");
 //        System.out.println(fileNews.display());
-        Human human = new Human("human");
-        human.say();
-
-        Dog dog = new Dog("dog");
-        dog.say();
+//        // 抽象类
+//        Human human = new Human("human");
+//        human.say();
+//
+//        Dog dog = new Dog("dog");
+//        dog.say();
+//        // 接口
+//        Video video = new Video();
+//        video.display();
     }
 }
 
