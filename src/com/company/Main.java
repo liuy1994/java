@@ -3,7 +3,6 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
         News news = new News();
         news.read("res/input.txt");
         System.out.println(news.display());

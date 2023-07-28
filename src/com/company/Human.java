@@ -1,18 +1,11 @@
 package com.company;
 
-public class Human {
-    private final String name;
-    private int height;
-
+public class Human extends Animal {
     public Human(String name) {
-        this.name = name;
-        this.height = 200;
+        super(name);
     }
-    public Human(String name, int height) {
-        this.name = name;
-        this.height = height;
-    }
-    public String getName() {
-        return this.name;
+
+    public String say() {
+        return name + ":human";
     }
 }
