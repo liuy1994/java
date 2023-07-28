@@ -13,11 +13,21 @@ public class Main {
         for (String s : str.split("")) {
             list.add(Integer.parseInt(s));
         }
-        System.out.println(list);
-        sort(list, 0, list.size() - 1);
+        System.out.println(sum(list, 5));
 
+    }
 
-        System.out.println(list);
+    public static ArrayList<Integer> sum(ArrayList<Integer> list, Integer target){
+        Map<Integer, Integer> set = new HashMap<Integer, Integer>();
+        for (int i=0;i<list.size();i++){
+            set.put(list.get(i), i);
+        }
+        for (Integer integer : list) {
+            if (set.containsKey(target - integer)) {
+                return new ArrayList<Integer>(Arrays.asList(set.get(integer), set.get(target - integer)));
+            }
+        }
+        return new ArrayList<Integer>();
     }
 
     public static void sort(ArrayList<Integer> list, Integer left, Integer right) {
