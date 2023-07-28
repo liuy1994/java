@@ -1,23 +1,36 @@
 package com.company;
+import java.io.*;
+import java.nio.charset.*;
 
 public class News {
     private String title;
     private String content;
-    public News(String title, String content) {
-        this.title = title;
-        this.content = content;
+
+    void read(String fileUrl) throws IOException {
+        FileInputStream input = new FileInputStream(fileUrl);
+        InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
+        BufferedReader buffer = new BufferedReader(reader);
+
+        this.title = buffer.readLine();
+        this.content = buffer.readLine();
+
+        buffer.close();
+        reader.close();
+        input.close();
     }
 
-    public String getTitle() {
-        return this.title;
+    void write(String fileUrl) throws IOException {
+        FileOutputStream output = new FileOutputStream(fileUrl);
+        OutputStreamWriter writer = new OutputStreamWriter(output, StandardCharsets.UTF_8);
+        PrintWriter print = new PrintWriter(writer);
+        print.print(this.display());
+        print.close();
+        writer.close();
+        output.close();
     }
 
-    public String getContent() {
-        return this.content;
+    String display() {
+        return "title: " + title + "\ncontent: " + content;
     }
 
-    public void display() {
-        System.out.println("Title: " + this.getTitle());
-        System.out.println("Content: " + this.getContent());
-    }
 }
