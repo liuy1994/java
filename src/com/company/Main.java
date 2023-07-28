@@ -8,13 +8,37 @@ public class Main {
 //      Queue<Integer> queue = new LinkedList<Integer>();
         ArrayList<Integer> list = new ArrayList<Integer>();
 
-        String str = "23654";
+        String str = "1123535";
 
         for (String s : str.split("")) {
             list.add(Integer.parseInt(s));
         }
-        System.out.println(sum(list, 5));
+        System.out.println(singleNum(list));
 
+    }
+
+    public static Integer singleNum(ArrayList<Integer> list) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (Integer integer : list) {
+            if (map.containsKey(integer)) {
+                map.put(integer, map.get(integer) + 1);
+            } else {
+                map.put(integer, 1);
+            }
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 1) {
+                return entry.getKey();
+            }
+        }
+        return null;
+
+//        Integer result = 0;
+//        for (int i = 0; i < list.size(); i++) {
+//            result ^= list.get(i);
+//        }
+//        return result;
     }
 
     public static ArrayList<Integer> sum(ArrayList<Integer> list, Integer target){
