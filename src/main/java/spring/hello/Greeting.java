@@ -1,4 +1,4 @@
-package hello;
+package spring.hello;
 
 public class Greeting {
     private final long id;
