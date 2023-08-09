@@ -1,5 +1,7 @@
 package spring.user;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,8 +16,12 @@ public class UserController {
         return new ArrayList<>(users.values());
     }
     @GetMapping("/user/{name}")
-    User getUser(@PathVariable String name){
-        return users.get(name);
+    ResponseEntity<User> getUser(@PathVariable String name){
+        User result = users.get(name);
+        if (users.containsKey(name)) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/user")
@@ -24,13 +30,20 @@ public class UserController {
         return user;
     }
     @DeleteMapping("/user/{name}")
-    void deleteUser(@PathVariable String name){
-        users.remove(name);
+    ResponseEntity<Void> deleteUser(@PathVariable String name){
+        if (users.containsKey(name)){
+            users.remove(name);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @PutMapping("/user")
-    User updateUser(@RequestBody User user){
-        users.put(user.getName(), user);
-        return user;
+    ResponseEntity<User> updateUser(@RequestBody User user){
+        if (users.containsKey(user.getName())){
+            User result = users.get(user.getName());
+            result.setContact(user.getContact());
+            return new ResponseEntity<>(users.get(user.getName()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
