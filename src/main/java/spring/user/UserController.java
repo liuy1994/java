@@ -17,10 +17,12 @@ import java.util.List;
 @RestController
 public class UserController {
     private final HashMap<String, User> users = new HashMap<>();
+
     @GetMapping("/user")
     List<User> getAllUsers(){
         return new ArrayList<>(users.values());
     }
+
     @GetMapping("/user/{name}")
     ResponseEntity<User> getUser(@PathVariable String name){
         User result = users.get(name);
