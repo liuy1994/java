@@ -3,10 +3,10 @@ package spring.user.model;
 import org.springframework.stereotype.Component;
 import spring.user.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Component
 public class UserMockDao implements UserDao{
     private final HashMap<String, User> users = new HashMap<>();
     public UserMockDao() {
@@ -24,7 +24,7 @@ public class UserMockDao implements UserDao{
 
     @Override
     public List<User> getAll() {
-        return null;
+       return new ArrayList<>(users.values());
     }
 
     @Override

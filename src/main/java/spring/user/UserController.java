@@ -4,6 +4,7 @@ import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.user.model.UserDao;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +18,12 @@ import java.util.List;
 @RestController
 public class UserController {
     private final HashMap<String, User> users = new HashMap<>();
+
+    private UserDao userDao;
+
+    public UserController(UserDao userDao){
+        this.userDao = userDao;
+    }
 
     @GetMapping("/user")
     List<User> getAllUsers(){
