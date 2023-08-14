@@ -6,4 +6,8 @@ public class GetProductResponse {
     public GetProductResponse(Product product) {
         this.product = product;
     }
+
+    public Product getProduct() {
+        return product;
+    }
 }
