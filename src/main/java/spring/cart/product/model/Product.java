@@ -7,6 +7,11 @@ public class Product {
     private String description;
     private long price;
 
+    public Product(String name, String description, long price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
     public Product(String id, String name, String description, long price) {
         this.id = id;
         this.name = name;
