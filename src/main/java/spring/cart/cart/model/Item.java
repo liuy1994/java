@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Item extends Product {
     private int num;
-    public Item(String id, String name, String description, long price) {
+    public Item(int id, String name, String description, int price) {
         super(id, name, description, price);
     }
 

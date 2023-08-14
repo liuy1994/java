@@ -2,28 +2,29 @@ package spring.cart.product.model;
 
 public class Product {
 
-    private String id;
+    private int id;
     private String name;
-    private String description;
+    private String desc;
     private long price;
 
-    public Product(String name, String description, long price) {
+    public Product(String name, String desc, int price) {
         this.name = name;
-        this.description = description;
+        this.desc = desc;
         this.price = price;
     }
-    public Product(String id, String name, String description, long price) {
+    public Product(int id, String name, String desc, int price) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.desc = desc;
         this.price = price;
     }
 
-    public String getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,11 +37,11 @@ public class Product {
     }
 
     public String getDescription() {
-        return description;
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String desc) {
+        this.desc = desc;
     }
 
     public long getPrice() {

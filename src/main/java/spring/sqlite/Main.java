@@ -9,8 +9,10 @@ public class Main {
             connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
+//            statement.executeUpdate("insert into product(id, name, price, desc) values (2, 'goods_02', 2000, 'ahhahah2')");
+//            statement.executeUpdate("insert into product(id, name, price, desc) values (3, 'goods_03', 3000, 'ahhahah3')");
+            ResultSet rs = statement.executeQuery("select * from product");
 
-            ResultSet rs = statement.executeQuery("select * from user");
             while (rs.next()) {
                 System.out.println("name = " + rs.getString("name"));
                 System.out.println("id = " + rs.getInt("id"));

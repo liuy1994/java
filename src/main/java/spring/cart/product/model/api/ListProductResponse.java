@@ -1,4 +1,6 @@
-package spring.cart.product.model;
+package spring.cart.product.model.api;
+
+import spring.cart.product.model.Product;
 
 import java.util.List;
 
