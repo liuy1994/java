@@ -1,11 +1,31 @@
 package spring.cart.product.model;
 
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import org.hibernate.annotations.Table;
+import org.springframework.data.annotation.Id;
+
+@Entity
+@Table(appliesTo = "product")
 public class Product {
 
+    @jakarta.persistence.Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "desc")
     private String desc;
-    private long price;
+    @Column(name = "price")
+    private int price;
+
+    public Product() {
+
+    }
 
     public Product(String name, String desc, int price) {
         this.name = name;
@@ -44,11 +64,11 @@ public class Product {
         this.desc = desc;
     }
 
-    public long getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

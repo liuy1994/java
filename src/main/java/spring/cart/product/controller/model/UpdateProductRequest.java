@@ -1,4 +1,4 @@
-package spring.cart.product.model.api;
+package spring.cart.product.controller.model;
 
 import spring.cart.product.model.Product;
 
