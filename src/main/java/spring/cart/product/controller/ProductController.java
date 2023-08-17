@@ -25,7 +25,7 @@ public class ProductController {
     }
     @GetMapping("/products/{productId}")
     public ResponseEntity<GetProductResponse> getProduct(@PathVariable String productId) {
-        Product product = productDao.getById(Integer.parseInt(productId));
+        Product product = productDao.findById(Integer.parseInt(productId));
         if (product == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(new GetProductResponse(product), HttpStatus.OK);
     }

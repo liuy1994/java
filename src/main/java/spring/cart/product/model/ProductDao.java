@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 @Repository
 public interface ProductDao extends CrudRepository<Product, Integer> {
     Product getById(int id);
+    Product findById(int id);
 }

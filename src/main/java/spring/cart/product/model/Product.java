@@ -1,12 +1,12 @@
 package spring.cart.product.model;
 
 
-
-import javax.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product")
+@JsonIgnoreProperties(value = "hibernateLazyInitializer")
 public class Product {
 
     @Id
