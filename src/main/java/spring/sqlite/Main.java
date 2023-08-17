@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
+            connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
 //            statement.executeUpdate("insert into product(id, name, price, desc) values (2, 'goods_02', 2000, 'ahhahah2')");

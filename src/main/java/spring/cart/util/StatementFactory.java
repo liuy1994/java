@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 @Component("statement")
 public class StatementFactory implements FactoryBean<Statement> {
-    private static final String DB_PATH = "jdbc:sqlite:identifier.sqlite";
+    private static final String DB_PATH = "jdbc:sqlite:sample.db";
     @Override
     public Statement getObject() throws Exception {
         Connection connection = DriverManager.getConnection(DB_PATH);
