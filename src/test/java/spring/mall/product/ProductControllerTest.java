@@ -1,4 +1,4 @@
-package spring.cart.product;
+package spring.mall.product;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,15 +1,15 @@
-package spring.cart.product.controller;
+package spring.mall.product.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import spring.cart.product.model.Product;
-import spring.cart.product.model.ProductDao;
-import spring.cart.product.controller.model.CreateProductRequest;
-import spring.cart.product.controller.model.GetProductResponse;
-import spring.cart.product.controller.model.ListProductResponse;
-import spring.cart.product.controller.model.UpdateProductRequest;
-import spring.cart.product.controller.validator.CreateProductRequestValidator;
+import spring.mall.product.model.Product;
+import spring.mall.product.model.ProductDao;
+import spring.mall.product.controller.model.CreateProductRequest;
+import spring.mall.product.controller.model.GetProductResponse;
+import spring.mall.product.controller.model.ListProductResponse;
+import spring.mall.product.controller.model.UpdateProductRequest;
+import spring.mall.product.controller.validator.CreateProductRequestValidator;
 
 @RestController
 public class ProductController {

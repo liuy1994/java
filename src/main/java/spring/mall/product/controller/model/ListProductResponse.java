@@ -1,6 +1,6 @@
-package spring.cart.product.controller.model;
+package spring.mall.product.controller.model;
 
-import spring.cart.product.model.Product;
+import spring.mall.product.model.Product;
 
 import java.util.List;
 

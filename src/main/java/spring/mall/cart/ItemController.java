@@ -1,4 +1,4 @@
-package spring.cart.cart;
+package spring.mall.cart;
 
 public class ItemController {
 

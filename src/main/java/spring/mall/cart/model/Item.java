@@ -1,6 +1,6 @@
-package spring.cart.cart.model;
+package spring.mall.cart.model;
 
-import spring.cart.product.model.Product;
+import spring.mall.product.model.Product;
 
 public class Item extends Product {
     private int num;

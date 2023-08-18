@@ -1,5 +1,5 @@
-package spring.cart.product.controller.model;
-import spring.cart.product.model.Product;
+package spring.mall.product.controller.model;
+import spring.mall.product.model.Product;
 
 public class GetProductResponse {
     final Product product;

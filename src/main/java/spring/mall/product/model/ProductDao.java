@@ -1,4 +1,4 @@
-package spring.cart.product.model;
+package spring.mall.product.model;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
