@@ -1,7 +1,7 @@
-package spring.mall.cart.model;
+package spring.mall.web.cart.model;
 
-import spring.mall.product.model.Product;
-import spring.mall.user.model.User;
+import spring.mall.web.product.model.Product;
+import spring.mall.web.user.model.User;
 
 import jakarta.persistence.*;
 

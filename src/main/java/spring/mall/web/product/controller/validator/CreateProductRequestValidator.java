@@ -1,7 +1,7 @@
-package spring.mall.product.controller.validator;
+package spring.mall.web.product.controller.validator;
 
 import org.springframework.stereotype.Component;
-import spring.mall.product.controller.model.CreateProductRequest;
+import spring.mall.web.product.view.CreateProductRequest;
 
 @Component
 public class CreateProductRequestValidator {

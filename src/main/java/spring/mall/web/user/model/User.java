@@ -1,6 +1,6 @@
-package spring.mall.user.model;
+package spring.mall.web.user.model;
 
-import spring.mall.cart.model.CartItem;
+import spring.mall.web.cart.model.CartItem;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,4 +18,16 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<CartItem> cartItems;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public long getId() {
+        return id;
+    }
 }

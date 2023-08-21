@@ -1,5 +1,5 @@
-package spring.mall.product.controller.model;
-import spring.mall.product.model.Product;
+package spring.mall.web.product.view;
+import spring.mall.web.product.model.Product;
 
 public class GetProductResponse {
     final Product product;

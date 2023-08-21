@@ -1,7 +1,7 @@
-package spring.mall.order.model;
+package spring.mall.web.order.model;
 
-import spring.mall.product.model.Product;
-import spring.mall.user.model.User;
+import spring.mall.web.product.model.Product;
+import spring.mall.web.user.model.User;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package spring.mall.product.model;
+package spring.mall.web.product.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
