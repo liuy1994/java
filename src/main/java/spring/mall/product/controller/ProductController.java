@@ -3,13 +3,12 @@ package spring.mall.product.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.mall.product.controller.model.*;
+import spring.mall.product.controller.validator.CreateProductRequestValidator;
 import spring.mall.product.model.Product;
 import spring.mall.product.model.ProductDao;
-import spring.mall.product.controller.model.CreateProductRequest;
-import spring.mall.product.controller.model.GetProductResponse;
-import spring.mall.product.controller.model.ListProductResponse;
-import spring.mall.product.controller.model.UpdateProductRequest;
-import spring.mall.product.controller.validator.CreateProductRequestValidator;
+
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -21,7 +20,8 @@ public class ProductController {
     }
     @GetMapping("/products")
     public ResponseEntity<ListProductResponse> listProducts() {
-        return new ResponseEntity<>(new ListProductResponse(), HttpStatus.OK);
+        List<Product> products = productDao.findAll();
+        return new ResponseEntity<>(new ListProductResponse(products), HttpStatus.OK);
     }
     @GetMapping("/products/{productId}")
     public ResponseEntity<GetProductResponse> getProduct(@PathVariable String productId) {
@@ -34,7 +34,7 @@ public class ProductController {
         if (!createProductRequestValidator.validate(body)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Product product = productDao.getById(1);
+        Product product = productDao.save(body);
         return new ResponseEntity<>(new GetProductResponse(product), HttpStatus.OK);
     }
     @PutMapping("/products/{productId}")
