@@ -2,7 +2,7 @@ package spring.mall.web.user.model;
 
 import spring.mall.web.cart.model.CartItem;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,8 +16,14 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "user")
     private List<CartItem> cartItems;
+
+    public User() {
+
+    }
 
     public String getName() {
         return name;
@@ -34,6 +40,11 @@ public class User {
     public User(long id, String name) {
         this.name = name;
         this.id = id;
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
 }

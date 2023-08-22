@@ -6,7 +6,6 @@ import spring.mall.web.product.view.CreateProductRequest;
 @Component
 public class CreateProductRequestValidator {
     public CreateProductRequestValidator() {
-        System.out.println("CreateProductRequestValidator");
     }
     public boolean validate(CreateProductRequest request) {
         if (request == null) {

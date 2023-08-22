@@ -28,8 +28,9 @@ public class SessionController {
 
     @PostMapping("/register")
     public ResponseEntity register(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
-//        User user = new User(loginRequest.getUsername(), loginRequest.getPassword());
-//        userDao.save(user);
+        User user = new User(loginRequest.getUsername(), loginRequest.getPassword());
+        System.out.println(user);
+        userDao.save(user);
         return new ResponseEntity(HttpStatus.CREATED);
     }
     @PostMapping("/login")
