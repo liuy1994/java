@@ -14,10 +14,7 @@ public class RegisterRequestValidator {
     public boolean validate(RegisterRequest request) {
         String username = request.getUsername();
 
-        User user = userDao.getByName(username);
-        if (user != null) {
-            return false;
-        }
-        return true;
+        User user = userDao.getByUsername(username);
+        return user == null;
     }
 }

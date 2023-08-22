@@ -13,8 +13,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
 
@@ -23,12 +23,10 @@ public class User {
             mappedBy = "user")
     private List<CartItem> cartItems;
 
-    public User() {
+    public User() {}
 
-    }
-
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -43,13 +41,9 @@ public class User {
         return cartItems;
     }
 
-    public User(long id, String name) {
-        this.name = name;
-        this.id = id;
-    }
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 

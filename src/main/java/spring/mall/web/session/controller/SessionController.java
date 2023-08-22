@@ -11,6 +11,7 @@ import spring.mall.web.session.view.LoginRequest;
 import spring.mall.web.session.view.RegisterRequest;
 import spring.mall.web.user.model.User;
 import spring.mall.web.user.model.UserDao;
+import spring.mall.web.user.model.UserSimple;
 
 import java.util.UUID;
 
@@ -40,33 +41,33 @@ public class SessionController {
         User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
 
         userDao.save(user);
-        return new ResponseEntity(userDao.getByName(registerRequest.getUsername()),HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
     @PostMapping("/login")
-    public ResponseEntity<User> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
-        User user = userDao.getByName(loginRequest.getUsername());
+    public ResponseEntity<UserSimple> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
+        User user = userDao.getByUsername(loginRequest.getUsername());
         if (user == null || !user.getPassword().equals(loginRequest.getPassword())) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         String token = UUID.randomUUID().toString();
         sessionManager.getSessions().put(user.getId(), new Session(user.getId(), token));
         System.out.println("Token: " + token);
-        return new ResponseEntity(user, HttpStatus.OK);
+        return new ResponseEntity(new UserSimple(user.getId(), user.getUsername(), token), HttpStatus.OK);
     }
 
     @GetMapping("/current")
-    public ResponseEntity<User> current(@CookieValue(name = USER_ID, defaultValue = "0") long userId, @CookieValue(name = SESSION_TOKEN, defaultValue = "token") String token) {
+    public ResponseEntity<UserSimple> current(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
         Session session = sessionManager.getSessions().get(userId);
         if (session == null || !session.getToken().equals(token)) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
         User user = userDao.getById(session.getUserId());
-        return new ResponseEntity<>(new User(user.getId(), user.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(new UserSimple(user.getId(), user.getUsername()), HttpStatus.OK);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(@CookieValue(name = USER_ID, defaultValue = "0") long userId, @CookieValue(name = SESSION_TOKEN, defaultValue = "token") String token) {
+    public ResponseEntity logout(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
         Session session = sessionManager.getSessions().get(userId);
         if (session == null || !session.getToken().equals(token)) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
