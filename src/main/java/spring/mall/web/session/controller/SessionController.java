@@ -4,9 +4,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.mall.web.session.controller.validator.RegisterRequestValidator;
 import spring.mall.web.session.model.Session;
 import spring.mall.web.session.model.SessionManager;
 import spring.mall.web.session.view.LoginRequest;
+import spring.mall.web.session.view.RegisterRequest;
 import spring.mall.web.user.model.User;
 import spring.mall.web.user.model.UserDao;
 
@@ -20,18 +22,25 @@ public class SessionController {
     private UserDao userDao;
     private SessionManager sessionManager;
 
-    public SessionController(UserDao userDao, SessionManager sessionManager) {
+    private RegisterRequestValidator registerRequestValidator;
+
+    public SessionController(UserDao userDao, SessionManager sessionManager, RegisterRequestValidator registerRequestValidator) {
         this.userDao = userDao;
         this.sessionManager = sessionManager;
+        this.registerRequestValidator = registerRequestValidator;
     }
 
 
     @PostMapping("/register")
-    public ResponseEntity register(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
-        User user = new User(loginRequest.getUsername(), loginRequest.getPassword());
-        System.out.println(user);
+    public ResponseEntity register(HttpServletResponse response, @RequestBody RegisterRequest registerRequest) {
+        boolean valid = registerRequestValidator.validate(registerRequest);
+        if (!valid) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
+
         userDao.save(user);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(userDao.getByName(registerRequest.getUsername()),HttpStatus.CREATED);
     }
     @PostMapping("/login")
     public ResponseEntity<User> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
@@ -41,6 +50,7 @@ public class SessionController {
         }
         String token = UUID.randomUUID().toString();
         sessionManager.getSessions().put(user.getId(), new Session(user.getId(), token));
+        System.out.println("Token: " + token);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
@@ -55,7 +65,7 @@ public class SessionController {
         return new ResponseEntity<>(new User(user.getId(), user.getName()), HttpStatus.OK);
     }
 
-    @DeleteMapping("/logout")
+    @PostMapping("/logout")
     public ResponseEntity logout(@CookieValue(name = USER_ID, defaultValue = "0") long userId, @CookieValue(name = SESSION_TOKEN, defaultValue = "token") String token) {
         Session session = sessionManager.getSessions().get(userId);
         if (session == null || !session.getToken().equals(token)) {

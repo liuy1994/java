@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import spring.mall.web.user.model.User;
 
 @Entity
-@Table(name = "cart")
+@Table(name = "cart_item")
 public class CartItem  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,17 @@ public class CartItem  {
 
     @Column(name = "quantity")
     private int quantity;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Product getProducts() {
+        return products;
+    }
 
 }

@@ -1,5 +1,6 @@
 package spring.mall.web.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import spring.mall.web.cart.model.CartItem;
 
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +37,10 @@ public class User {
 
     public long getId() {
         return id;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 
     public User(long id, String name) {
