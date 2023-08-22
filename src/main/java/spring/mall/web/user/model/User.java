@@ -10,7 +10,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "name")
     private String name;
     @Column(name = "password")
@@ -30,4 +30,10 @@ public class User {
     public long getId() {
         return id;
     }
+
+    public User(long id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+
 }

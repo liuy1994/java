@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import spring.mall.web.product.controller.validator.CreateProductRequestValidator;
 import spring.mall.web.product.model.Product;
 import spring.mall.web.product.model.ProductDao;
-import spring.mall.product.view.*;
 import spring.mall.web.product.view.*;
 
 import java.util.List;

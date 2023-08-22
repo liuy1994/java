@@ -1,9 +1,9 @@
 package spring.mall.web.cart.model;
 
 import spring.mall.web.product.model.Product;
-import spring.mall.web.user.model.User;
 
 import jakarta.persistence.*;
+import spring.mall.web.user.model.User;
 
 @Entity
 @Table(name = "cart")
@@ -14,7 +14,7 @@ public class CartItem  {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User users;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
