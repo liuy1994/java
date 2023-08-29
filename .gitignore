@@ -34,4 +34,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
+/vue-project/.idea
+/vue-project/.vscode
+/vue-project/node_modules
