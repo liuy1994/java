@@ -46,10 +46,19 @@ public class ProductController {
             return new ResponseEntity<>(new Result("字段校验不通过"), HttpStatus.OK);
         }
         Product product = productDao.getById(productId);
-        return new ResponseEntity<>(new Result(new GetProductResponse(product)), HttpStatus.OK);
+        product.setDescription(updateProductRequest.getDescription());
+        product.setName(updateProductRequest.getName());
+        product.setPrice(updateProductRequest.getPrice());
+        Product newProduct = productDao.save(product);
+        return new ResponseEntity<>(new Result(newProduct), HttpStatus.OK);
     }
     @DeleteMapping("/products/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String productId) {
+    public ResponseEntity<Result<Void>> deleteProduct(@PathVariable Integer productId) {
+        boolean exists = productDao.existsById(productId);
+        if (!exists) {
+            return new ResponseEntity<>(new Result<>("商品不存在"), HttpStatus.OK);
+        }
+        productDao.deleteById(productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

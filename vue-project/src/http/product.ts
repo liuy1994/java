@@ -1,10 +1,10 @@
 import { http } from "@/http"
 
-interface ProductItem {
+export interface ProductItem {
   id?: number
   name: string
-  price: number
-  desc: string
+  price: number|null
+  description: string
 }
 
 export const getGoodsListApi = () => {

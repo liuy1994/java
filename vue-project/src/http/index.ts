@@ -29,13 +29,16 @@ const request = (method: ReturnType<typeof enumToType<typeof Methods>>) => {
         },
       })
       if (response.status >= 200 && response.status < 300) {
-        const json = await response.json()
-        console.log(json)
-        if (json.code !== 200) {
-          ElMessage.error(json.msg || '未知错误')
-          throw new Error(json.msg || '未知错误')
+        try {
+          const json = await response.json()
+          if (json.code !== 200) {
+            ElMessage.error(json.msg || '未知错误')
+            throw new Error(json.msg || '未知错误')
+          }
+          return json.data
+        } catch (e) {
+          return "success"
         }
-        return json.data
       }
       if (response.status === 401) {
         return window.location.href = '/login'
@@ -52,5 +55,4 @@ export const http = Object.values(Methods).reduce((prev, method) => {
   }
 }, {})
 
-console.log(http)
 

@@ -25,5 +25,6 @@ main:has(main) {
 
 main main {
   padding: 20px;
+  flex-grow: 1;
 }
 </style>

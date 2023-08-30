@@ -14,6 +14,10 @@ public interface ProductDao extends CrudRepository<Product, Integer> {
 
     Product save(Product product);
 
+    boolean existsById(Integer productId);
+
+    void deleteById(Integer productId);
+
     long count();
 
 }
