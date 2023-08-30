@@ -3,6 +3,7 @@ package spring.mall.web.product.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.mall.web.common.Result;
 import spring.mall.web.product.controller.validator.CreateProductRequestValidator;
 import spring.mall.web.product.model.Product;
 import spring.mall.web.product.model.ProductDao;
@@ -19,9 +20,9 @@ public class ProductController {
         this.createProductRequestValidator = createProductRequestValidator;
     }
     @GetMapping("/products")
-    public ResponseEntity<ListProductResponse> listProducts() {
+    public ResponseEntity<Result<ListProductResponse>> listProducts() {
         List<Product> products = productDao.findAll();
-        return new ResponseEntity<>(new ListProductResponse(products), HttpStatus.OK);
+        return new ResponseEntity<>(new Result(new ListProductResponse(products)), HttpStatus.OK);
     }
     @GetMapping("/products/{productId}")
     public ResponseEntity<GetProductResponse> getProduct(@PathVariable String productId) {
@@ -30,18 +31,22 @@ public class ProductController {
         return new ResponseEntity<>(new GetProductResponse(product), HttpStatus.OK);
     }
     @PostMapping("/products")
-    public ResponseEntity<CreateProductResponse> createProduct(@RequestBody CreateProductRequest createProductRequest) {
+    public ResponseEntity<Result<CreateProductResponse>> createProduct(@RequestBody CreateProductRequest createProductRequest) {
         boolean valid = createProductRequestValidator.validate(createProductRequest);
         if (!valid) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Result("字段校验不通过"), HttpStatus.OK);
         }
         Product product = productDao.save(new Product(createProductRequest.getName(), createProductRequest.getDescription(), createProductRequest.getPrice()));
-        return new ResponseEntity<>(new CreateProductResponse(product), HttpStatus.OK);
+        return new ResponseEntity<>(new Result(new CreateProductResponse(product)), HttpStatus.OK);
     }
     @PutMapping("/products/{productId}")
-    public ResponseEntity<GetProductResponse> updateProduct(@PathVariable int productId, @RequestBody UpdateProductRequest updateProductRequest) {
+    public ResponseEntity<Result<GetProductResponse>> updateProduct(@PathVariable int productId, @RequestBody UpdateProductRequest updateProductRequest) {
+        boolean valid = createProductRequestValidator.validate(updateProductRequest);
+        if (!valid) {
+            return new ResponseEntity<>(new Result("字段校验不通过"), HttpStatus.OK);
+        }
         Product product = productDao.getById(productId);
-        return new ResponseEntity<>(new GetProductResponse(product), HttpStatus.OK);
+        return new ResponseEntity<>(new Result(new GetProductResponse(product)), HttpStatus.OK);
     }
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String productId) {

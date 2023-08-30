@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.mall.web.common.Result;
 import spring.mall.web.session.controller.validator.RegisterRequestValidator;
 import spring.mall.web.session.model.Session;
 import spring.mall.web.session.model.SessionManager;
@@ -33,10 +34,10 @@ public class SessionController {
 
 
     @PostMapping("/register")
-    public ResponseEntity register(HttpServletResponse response, @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<Result> register(HttpServletResponse response, @RequestBody RegisterRequest registerRequest) {
         boolean valid = registerRequestValidator.validate(registerRequest);
         if (!valid) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Result<>("用户名已存在"), HttpStatus.OK);
         }
         User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
 
@@ -44,33 +45,33 @@ public class SessionController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
     @PostMapping("/login")
-    public ResponseEntity<UserSimple> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Result<UserSimple>> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
         User user = userDao.getByUsername(loginRequest.getUsername());
         if (user == null || !user.getPassword().equals(loginRequest.getPassword())) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(new Result<>("用户不存在或密码不正确"),HttpStatus.OK);
         }
         String token = UUID.randomUUID().toString();
         sessionManager.getSessions().put(user.getId(), new Session(user.getId(), token));
         System.out.println("Token: " + token);
-        return new ResponseEntity(new UserSimple(user.getId(), user.getUsername(), token), HttpStatus.OK);
+        return new ResponseEntity(new Result<>(new UserSimple(user.getId(), user.getUsername(), token)), HttpStatus.OK);
     }
 
     @GetMapping("/current")
-    public ResponseEntity<UserSimple> current(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
+    public ResponseEntity<Result<UserSimple>> current(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
         Session session = sessionManager.getSessions().get(userId);
         if (session == null || !session.getToken().equals(token)) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         User user = userDao.getById(session.getUserId());
-        return new ResponseEntity<>(new UserSimple(user.getId(), user.getUsername()), HttpStatus.OK);
+        return new ResponseEntity<>(new Result<>(new UserSimple(user.getId(), user.getUsername())), HttpStatus.OK);
     }
 
     @PostMapping("/logout")
     public ResponseEntity logout(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
         Session session = sessionManager.getSessions().get(userId);
         if (session == null || !session.getToken().equals(token)) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         sessionManager.getSessions().remove(userId);
         return new ResponseEntity(HttpStatus.OK);
