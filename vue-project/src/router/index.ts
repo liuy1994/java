@@ -9,25 +9,31 @@ export const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue')
+    path: '/goods',
+    name: '商品列表',
+    component: () => import('../views/Goods.vue')
   },
 ]
 
+export const myHistory = createWebHistory(import.meta.env.BASE_URL)
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: myHistory,
   routes: [
     {
       path: '/login',
       name: '登录',
-      component: () => import('../views/Login/index.vue')
+      component: () => import('../views/Login.vue')
     },
     {
       path: '/',
       name: '/',
       component: Layout,
       children: routes,
+    },
+    {
+      path: "/*",
+      redirect: "/",
     }
   ],
 })
