@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { getGoodsListApi } from "@/http/goods"
+import { getGoodsListApi } from "@/http/product"
 
 getGoodsListApi()
 </script>

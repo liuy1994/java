@@ -17,11 +17,11 @@
             <el-input v-model="ruleForm.password" placeholder="密码" type="password"/>
           </el-form-item>
           <el-form-item>
-            <el-row gutter="20">
-              <el-col span="12">
-                <el-button @click="resetForm(loginFormRef)">Reset</el-button>
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-button  @click.prevent="resetForm(loginFormRef)">Reset</el-button>
               </el-col>
-              <el-col span="12">
+              <el-col :span="12">
                 <el-button type="primary" @click="submitForm(loginFormRef)">
                   Submit
                 </el-button>
@@ -50,11 +50,11 @@
             <el-input v-model="ruleForm.rePassword" placeholder="确认密码" type="password"/>
           </el-form-item>
           <el-form-item>
-            <el-row gutter="20">
-              <el-col span="12">
-                <el-button @click="resetForm(registerFormRef)">Reset</el-button>
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-button @click.prevent="resetForm(registerFormRef)">Reset</el-button>
               </el-col>
-              <el-col span="12">
+              <el-col :span="12">
                 <el-button type="primary" @click="submitForm(registerFormRef)">
                   Submit
                 </el-button>
@@ -71,23 +71,23 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
+import { LoginForm, registerApi } from "@/http/user"
+import { useUserStore } from "@/stores/user"
+import { ElMessage } from "element-plus"
 
-interface RuleForm {
-  username: string
-  password: string
-  rePassword?: string
-}
+const store = useUserStore()
+console.log(store)
 const activeName = ref("login")
 const formSize = ref('large')
 const loginFormRef = ref<FormInstance>()
 const registerFormRef = ref<FormInstance>()
-const ruleForm = reactive<RuleForm>({
+const ruleForm = reactive<LoginForm>({
   username: '',
   password: '',
   rePassword: '',
 })
 
-const rules = reactive<FormRules<RuleForm>>({
+const rules = reactive<FormRules<LoginForm>>({
   username: [
     { required: true, message: 'Please input username', trigger: 'blur' },
   ],
@@ -109,15 +109,18 @@ const rules = reactive<FormRules<RuleForm>>({
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
       const params = { ...ruleForm }
       if (activeName.value === 'login') {
         delete params.rePassword
-        console.log('login!', params)
+        await store.login(params)
+
+        ElMessage.success("登录成功")
       }
       if (activeName.value === 'register') {
-        console.log('register!', params)
+        registerApi(params)
+        ElMessage.success("注册成功")
       }
     }
   })

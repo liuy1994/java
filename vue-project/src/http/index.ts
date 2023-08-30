@@ -1,5 +1,6 @@
 import { enumToType, getLocalStorage } from "@/utils/common"
 import { ElMessage } from 'element-plus'
+import { AUTH_TOKEN } from "@/utils/constant"
 
 enum Methods {
   GET = "get",
@@ -12,22 +13,29 @@ enum Methods {
 const request = (method: ReturnType<typeof enumToType<typeof Methods>>) => {
     return async (url: string, input?: RequestInit & {data: any}) => {
       const { data, headers = {} } = input || {}
-      const token = getLocalStorage("token")
-      if (!token) {
+      const token = getLocalStorage(AUTH_TOKEN)
+      if (!token && !url.includes("/login")) {
         return window.location.href = '/login'
       }
       const response = await fetch(url,{
         method,
-        body: data as RequestInit["body"],
+        body: JSON.stringify(data),
         headers: {
           'content-type': 'application/json',
           'responseType': 'json',
+          'session_token': token,
           ...headers,
 
         },
       })
       if (response.status >= 200 && response.status < 300) {
-        return response.json()
+        const json = await response.json()
+        console.log(json)
+        if (json.code !== 200) {
+          ElMessage.error(json.msg || '未知错误')
+          throw new Error(json.msg || '未知错误')
+        }
+        return json.data
       }
       if (response.status === 401) {
         return window.location.href = '/login'
@@ -43,4 +51,6 @@ export const http = Object.values(Methods).reduce((prev, method) => {
     [method]: request(method),
   }
 }, {})
+
+console.log(http)
 

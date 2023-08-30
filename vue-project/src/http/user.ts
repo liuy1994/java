@@ -1,20 +1,18 @@
 import { http } from "@/http"
 
-interface LoginForm {
-  username: string,
+
+export interface LoginForm {
+  username: string
   password: string
+  rePassword?: string
 }
 
-interface RegisterForm {
-  username: string,
-  password: string
-}
 
 export const loginApi = (data: LoginForm) => {
   return http.post('/api/login', { data })
 }
 
-export const registerApi = (data: RegisterForm) => {
+export const registerApi = (data: LoginForm) => {
   return http.post('/api/register', { data })
 }
 
