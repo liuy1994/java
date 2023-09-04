@@ -3,8 +3,8 @@
     <el-button type="primary" @click="handleEdit()">新增</el-button>
   </el-row>
   <el-table :data="tableData" style="width: 100%">
-    <el-table-column prop="id" label="ID" width="180" />
-    <el-table-column prop="name" label="名称" width="180" />
+    <el-table-column prop="id" label="ID" width="64" />
+    <el-table-column prop="name" label="名称"  />
     <el-table-column prop="description" label="描述" />
     <el-table-column prop="price" label="价格" />
     <el-table-column  label="操作" >

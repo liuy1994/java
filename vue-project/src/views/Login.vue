@@ -76,7 +76,6 @@ import { useUserStore } from "@/stores/user"
 import { ElMessage } from "element-plus"
 
 const store = useUserStore()
-console.log(store)
 const activeName = ref("login")
 const formSize = ref('large')
 const loginFormRef = ref<FormInstance>()
