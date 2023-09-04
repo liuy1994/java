@@ -17,7 +17,7 @@ export const registerApi = (data: LoginForm) => {
 }
 
 export const getCurrentUserApi = () => {
-  return http.get('/api/currentUser')
+  return http.get('/api/current')
 }
 
 export const logoutApi = () => {

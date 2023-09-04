@@ -26,12 +26,13 @@ public class JwtUtil {
 
     public static UserSimple parseToken(String token) {
         Jws<Claims> claimsJws = validateToken(token);
+        if (claimsJws == null) {
+            return null;
+        }
         Claims claims = claimsJws.getBody();
-        System.out.println(claims.get("username"));
-        System.out.println(claims.get("user_id"));
-        System.out.println(claims.getId());
-        System.out.println(claims.getSubject());
-        return new UserSimple((long) claims.get("user_id"), (String) claims.get("username"));
+        String username = (String) claims.get("username");
+        long user_id = (Integer) claims.get("user_id");
+        return new UserSimple(user_id, username);
     }
 
     public static Jws<Claims> validateToken(String token) {

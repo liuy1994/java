@@ -20,7 +20,6 @@ import java.util.UUID;
 @RestController
 public class SessionController {
     private static final String SESSION_TOKEN = "session_token";
-    private static final String USER_ID = "user_id";
 
     private UserDao userDao;
     private SessionManager sessionManager;
@@ -43,7 +42,8 @@ public class SessionController {
         User user = new User(registerRequest.getUsername(), registerRequest.getPassword());
 
         userDao.save(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        user.setPassword(null);
+        return new ResponseEntity<>(new Result<>(user), HttpStatus.CREATED);
     }
     @PostMapping("/login")
     public ResponseEntity<Result<UserSimple>> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
@@ -56,27 +56,28 @@ public class SessionController {
         }
         String token = JwtUtil.createToken(user);
         System.out.println("Token: " + token);
-        return new ResponseEntity<>(new Result<>(new UserSimple(user.getId(), user.getUsername(), "Bearer " + token)), HttpStatus.OK);
+        UserSimple userSimple = new UserSimple(user.getId(), user.getUsername());
+        userSimple.setToken(token);
+        return new ResponseEntity<>(new Result<>(userSimple), HttpStatus.OK);
     }
 
     @GetMapping("/current")
-    public ResponseEntity<Result<UserSimple>> current(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
-        Session session = sessionManager.getSessions().get(userId);
-        if (session == null || !session.getToken().equals(token)) {
+    public ResponseEntity<Result<UserSimple>> current(@RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
+        UserSimple userSimple = JwtUtil.parseToken(token);
+        if (userSimple == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
-        User user = userDao.getById(session.getUserId());
+        User user = userDao.getById(userSimple.getId());
         return new ResponseEntity<>(new Result<>(new UserSimple(user.getId(), user.getUsername())), HttpStatus.OK);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Object> logout(@RequestHeader(name = USER_ID, defaultValue = "0") long userId, @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
-        Session session = sessionManager.getSessions().get(userId);
-        if (session == null || !session.getToken().equals(token)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        sessionManager.getSessions().remove(userId);
+    public ResponseEntity<Object> logout( @RequestHeader(name = SESSION_TOKEN, defaultValue = "token") String token) {
+//        Session session = sessionManager.getSessions().get(userId);
+//        if (session == null || !session.getToken().equals(token)) {
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+//        sessionManager.getSessions().remove(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

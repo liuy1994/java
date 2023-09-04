@@ -1,4 +1,11 @@
 <script setup lang="ts">
+
+import { onMounted } from "vue"
+import { getCurrentUserApi } from "@/http/user"
+
+onMounted(() => {
+  getCurrentUserApi()
+})
 </script>
 
 <template>
