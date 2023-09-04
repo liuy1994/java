@@ -17,10 +17,10 @@ import spring.mall.web.user.model.UserSimple;
 
 import java.util.UUID;
 
+import static spring.mall.config.Constant.SESSION_TOKEN;
+
 @RestController
 public class SessionController {
-    private static final String SESSION_TOKEN = "session_token";
-
     private UserDao userDao;
     private SessionManager sessionManager;
 

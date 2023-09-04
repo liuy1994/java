@@ -18,7 +18,7 @@ public class CartItem  {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private Product products;
+    private Product product;
 
     @Column(name = "quantity")
     private int quantity;
@@ -31,8 +31,9 @@ public class CartItem  {
         return quantity;
     }
 
-    public Product getProducts() {
-        return products;
+    public Product getProduct() {
+        return product;
     }
+
 
 }

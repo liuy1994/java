@@ -9,9 +9,14 @@ export const routes = [
     component: HomeView
   },
   {
-    path: '/goods',
+    path: '/product',
     name: '商品列表',
-    component: () => import('../views/Goods.vue')
+    component: () => import('../views/Product.vue')
+  },
+  {
+    path: '/cart',
+    name: '商品列表',
+    component: () => import('../views/Cart.vue')
   },
 ]
 

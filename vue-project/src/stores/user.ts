@@ -8,7 +8,6 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async (data: any) => {
     const res = await loginApi(data)
-    console.log(res)
     setLocalStorage(AUTH_TOKEN, res.token)
     myHistory.push("/")
   }

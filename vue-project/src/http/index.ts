@@ -14,7 +14,6 @@ const request = (method: ReturnType<typeof enumToType<typeof Methods>>) => {
     return async (url: string, input?: RequestInit & {data: any}) => {
       const { data, headers = {} } = input || {}
       const token = getLocalStorage(AUTH_TOKEN)
-      console.log({ token })
       if (!token && !url.includes("/login")) {
         return window.location.href = '/login'
       }

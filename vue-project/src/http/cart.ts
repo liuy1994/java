@@ -1,13 +1,13 @@
 import { http } from "@/http"
 
-export const getCartListApi = () => {
-  return http.get('/api/cart')
+export interface CartItem {
+  id?: number|null
+  product_id: number|null
+  quantity: number|null
 }
 
-interface CartItem {
-  id?: number
-  goods_id: number
-  count: number
+export const getCartListApi = () => {
+  return http.get('/api/cart')
 }
 
 export const updateCartApi = (data: CartItem) => {
